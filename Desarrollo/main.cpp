@@ -167,11 +167,31 @@ void load_input() {
     file_input.close();
 }
 
+void load_stop() {
+    ifstream file_input;
+    string path;
+    string line;
+
+    cout << "Introduce el nombre del archivo con la lista de stop words a considerar: " << endl;
+    cin >> path;
+    file_input.open(path);
+    cin.ignore();
+
+    while (getline(file_input, line)) {
+        transform(line.begin(), line.end(), line.begin(), ::tolower);
+        line.erase(remove_if(line.begin(), line.end(), ::ispunct), line.end());
+        list_stop.push_back(line);
+    }
+
+    file_input.close();
+}
+
 int main() {
 	char menuOption;
 	bool isAsc = true;
 
     load_input();
+    cout << endl;
 
 	do {
 		cout << "1. Ejecuta Key-Word-In-Context" << endl;
@@ -185,7 +205,7 @@ int main() {
 			cout << "3. Cambia el tipo de ordenamiento (DESC seleccionado)" << endl;
 		cout << "4. Salir de la aplicacion" << endl;
 
-		cout << endl << endl << "Ingresa el numero de la accion que desees realizar: ";
+		cout << endl << "Ingresa el numero de la accion que desees realizar: ";
 		cin >> menuOption;
 		cout << endl;
 
@@ -206,9 +226,12 @@ int main() {
 				}
 				break;
 			case '2':
+			    load_stop();
+			    cout << endl;
 				break;
 			case '3':
 				isAsc = !isAsc;
+				cout << endl;
 				break;
 			case '4':
 				break;
