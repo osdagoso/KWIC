@@ -1,26 +1,28 @@
 #ifndef ORDER_H_INCLUDED
 #define ORDER_H_INCLUDED
 
+#include <functional>
+
+/**
+ * Order class hierarchy implemented following Template Method design pattern
+ */
+
 class Order {
-    private:
-        virtual bool definedOrder(int i, int j) = 0;
     public:
-        void sortPhrases(vector<string> &listPhrases) {
-            sort(listPhrases.begin(), listPhrases.end(), definedOrder);
-        }
+        virtual void sortPhrases(vector<string> &listPhrases) = 0;
 };
 
 class OrderAsc : public Order {
-    private:
-        bool definedOrder(int i, int j) {
-            return (i < j);
+    public:
+        void sortPhrases(vector<string> &listPhrases) {
+            sort(listPhrases.begin(), listPhrases.end());
         }
 };
 
 class OrderDesc : public Order {
-    private:
-        bool definedOrder(int i, int j) {
-            return (j < i);
+    public:
+        void sortPhrases(vector<string> &listPhrases) {
+            sort(listPhrases.begin(), listPhrases.end(), greater<string>());
         }
 };
 
