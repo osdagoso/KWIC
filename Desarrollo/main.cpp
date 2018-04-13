@@ -12,6 +12,8 @@
 
 using namespace std;
 
+#include "Order.h"
+
 // global objects for holding the inputs and output strings.
 vector<string> list_inputs;
 vector<string> list_outputs;
@@ -189,6 +191,7 @@ void load_stop() {
 int main() {
 	char menuOption;
 	bool isAsc = true;
+	Order* orderModule;
 
     load_input();
     cout << endl;
@@ -211,6 +214,12 @@ int main() {
 
 		switch (menuOption) {
 			case '1':
+			    // Based on the user's chosen setting, generate Order module
+			    if (isAsc)
+                    orderModule = new OrderAsc;
+                else
+                    orderModule = new OrderDesc;
+
 				for (auto i = list_inputs.begin(); i != list_inputs.end(); i++) {
 					permute_string(*i);
 				}
@@ -219,11 +228,13 @@ int main() {
 					Sleep(100);
 				}
 
-				sort(list_outputs.begin(), list_outputs.end());
+				orderModule->sortPhrases(list_outputs);
 
 				for(string permutacion : list_outputs) {
 					cout << permutacion << endl;
 				}
+
+				delete orderModule;
 				break;
 			case '2':
 			    load_stop();
