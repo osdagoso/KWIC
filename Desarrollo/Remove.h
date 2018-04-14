@@ -1,6 +1,8 @@
 #ifndef REMOVE_H_INCLUDED
 #define REMOVE_H_INCLUDED
 
+#include <functional>
+
 /**
  * Remove class implemented as a Singleton
  */
@@ -10,10 +12,13 @@
          static Remove *rInstance;
      public:
          void removePhrases(vector<int> indexPhrases, vector<string> &listPhrases) {
-             //
+             for(int index : indexPhrases) {
+                listPhrases.erase(listPhrases.begin() + index);
+             }
          }
          void cleanIndexList(vector<int> &indexPhrases) {
-             //
+             sort(indexPhrases.begin(), indexPhrases.end(), greater<string>());
+             indexPhrases.erase(unique(indexPhrases.begin(), indexPhrases.end()), indexPhrases.end());
          }
          void selectPhrasesToRemove(vector<string> &listPhrases) {
              int cont = 0;
