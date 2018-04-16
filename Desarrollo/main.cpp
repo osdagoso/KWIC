@@ -13,6 +13,10 @@
 using namespace std;
 
 #include "Order.h"
+#include "Remove.h"
+
+// Initializing Remove singleton
+Remove* Remove::rInstance = NULL;
 
 // global objects for holding the inputs and output strings.
 vector<string> list_inputs;
@@ -220,6 +224,8 @@ int main() {
                 else
                     orderModule = new OrderDesc;
 
+                Remove::instance()->selectPhrasesToRemove(list_inputs);
+
 				for (auto i = list_inputs.begin(); i != list_inputs.end(); i++) {
 					permute_string(*i);
 				}
@@ -229,6 +235,8 @@ int main() {
 				}
 
 				orderModule->sortPhrases(list_outputs);
+
+				Remove::instance()->selectPhrasesToRemove(list_outputs);
 
 				for(string permutacion : list_outputs) {
 					cout << permutacion << endl;
