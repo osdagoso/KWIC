@@ -3,5 +3,3 @@
 **/*.cbp
 **/bin
 **/obj
-**/makefile
-**/.vs
